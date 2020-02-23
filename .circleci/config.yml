@@ -1,0 +1,33 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@0.2.0
+
+jobs:
+  build:
+    working_directory: ~/code
+    executor: android/android
+    docker:
+      - image: circleci/android:api-29
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Chmod Permissions #if permission for Gradlew Dependencies fail, use this.
+          command: sudo chmod +x ./gradlew
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies --no-daemon
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Check Code Style
+          command: ./gradlew clean ktlintCheck --no-daemon
+      - run:
+          name: Check Unit Tests
+          command: ./gradlew clean test --no-daemon
