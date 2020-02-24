@@ -1,0 +1,3 @@
+[*.{kt, kts}]
+# Disable for now, because default optimize imports from IDE not fixing the error
+disabled_rules = import-ordering

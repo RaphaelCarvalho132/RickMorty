@@ -8,6 +8,6 @@ class CustomApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Timber.plant(DebugTree())// TODO implement Tree for production
+        Timber.plant(DebugTree()) // TODO implement Tree for production
     }
 }
