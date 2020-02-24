@@ -1,2 +1,3 @@
 rootProject.name='RickMorty'
 include ':app'
+include ':core:database'
