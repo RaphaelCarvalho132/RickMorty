@@ -1,3 +1,5 @@
 rootProject.name='RickMorty'
 include ':app'
 include ':core:database'
+include ':core:api'
+include ':core-test:api-test'
