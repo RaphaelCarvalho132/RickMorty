@@ -5,19 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.raphael.carvalho.database.character.CharacterDao
-import com.raphael.carvalho.database.character.model.Character
-import com.raphael.carvalho.database.util.converter.ListStringConverter
+import com.raphael.carvalho.database.character.CharacterRoomDao
+import com.raphael.carvalho.database.character.model.CharacterVo
+import com.raphael.carvalho.database.util.converter.ListLongConverter
 
 @Database(
-    entities = [Character::class],
+    entities = [CharacterVo::class],
     version = 1,
     exportSchema = false
 )
-@TypeConverters(ListStringConverter::class)
+@TypeConverters(ListLongConverter::class)
 abstract class RickMortyDatabase : RoomDatabase() {
 
-    abstract fun characterRoomDao(): CharacterDao
+    internal abstract fun characterRoomDao(): CharacterRoomDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the same time.

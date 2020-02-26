@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.raphael.carvalho.character.Character
+import com.raphael.carvalho.character.Location
+import com.raphael.carvalho.character.Origin
 import com.raphael.carvalho.database.RickMortyDatabase
-import com.raphael.carvalho.database.character.model.Character
-import com.raphael.carvalho.database.character.model.CharacterLocation
-import com.raphael.carvalho.database.character.model.CharacterOrigin
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -19,8 +19,8 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-class CharacterDaoTest {
-    private lateinit var characterDao: CharacterDao
+class CharacterDaoImpTest {
+    private lateinit var characterRoomDao: CharacterDao
     private lateinit var db: RickMortyDatabase
 
     @Before
@@ -29,7 +29,9 @@ class CharacterDaoTest {
         db = Room.inMemoryDatabaseBuilder(context, RickMortyDatabase::class.java)
             .allowMainThreadQueries()
             .build()
-        characterDao = db.characterRoomDao()
+        characterRoomDao = CharacterDaoImp(
+            db.characterRoomDao()
+        )
     }
 
     @After
@@ -42,11 +44,11 @@ class CharacterDaoTest {
     @Throws(Exception::class)
     fun givenEmptyDatabase_whenInsertCharacter_thenCharacterWillBeSaved() = runBlocking {
         val character = createCharacter(1)
-        val initialSize = characterDao.getCharacters().size
+        val initialSize = characterRoomDao.getCharacters().size
 
-        characterDao.insert(characters = listOf(character))
+        characterRoomDao.insert(listOf(character))
 
-        val characters = characterDao.getCharacters()
+        val characters = characterRoomDao.getCharacters()
         assertEquals(0, initialSize)
         assertEquals(1, characters.size)
         assertEquals(character, characters[0])
@@ -57,13 +59,13 @@ class CharacterDaoTest {
     fun givenDatabaseWithCharacterId1_whenInsertCharacterId1_thenDatabaseNeedUpdateCharacter() =
         runBlocking {
             val initialCharacter = createCharacter(1)
-            characterDao.insert(characters = listOf(initialCharacter))
-            val initialSize = characterDao.getCharacters().size
+            characterRoomDao.insert(listOf(initialCharacter))
+            val initialSize = characterRoomDao.getCharacters().size
             val character = createCharacter(1, "Raphael Carvalho")
 
-            characterDao.insert(characters = listOf(character))
+            characterRoomDao.insert(listOf(character))
 
-            val characters = characterDao.getCharacters()
+            val characters = characterRoomDao.getCharacters()
             assertEquals(1, initialSize)
             assertEquals(1, characters.size)
             assertEquals(character, characters[0])
@@ -74,9 +76,9 @@ class CharacterDaoTest {
     fun givenDatabaseWithCharacterId1_whenGetCharacterId1_thenWillBeReturnedCharacterId1() =
         runBlocking {
             val initialCharacter = createCharacter(1)
-            characterDao.insert(characters = listOf(initialCharacter))
+            characterRoomDao.insert(listOf(initialCharacter))
 
-            val character = characterDao.getCharacter(1)
+            val character = characterRoomDao.getCharacter(1)
 
             assertEquals(initialCharacter, character)
         }
@@ -84,7 +86,7 @@ class CharacterDaoTest {
     @Test
     @Throws(Exception::class)
     fun givenEmptyDatabase_whenGetCharacterId1_thenWillBeReturnedNull() = runBlocking {
-        val character = characterDao.getCharacter(1)
+        val character = characterRoomDao.getCharacter(1)
 
         assertNull(character)
     }
@@ -98,9 +100,9 @@ class CharacterDaoTest {
                 createCharacter(2),
                 createCharacter(3)
             )
-            characterDao.insert(initialCharacters)
+            characterRoomDao.insert(initialCharacters)
 
-            val characters = characterDao.getCharacters()
+            val characters = characterRoomDao.getCharacters()
 
             assertEquals(initialCharacters, characters)
         }
@@ -108,7 +110,7 @@ class CharacterDaoTest {
     @Test
     @Throws(Exception::class)
     fun givenEmptyDatabase_whenGetCharacters_thenWillBeReturnedEmptyList() = runBlocking {
-        val characters = characterDao.getCharacters()
+        val characters = characterRoomDao.getCharacters()
 
         assertTrue(characters.isEmpty())
     }
@@ -121,33 +123,34 @@ class CharacterDaoTest {
             createCharacter(2),
             createCharacter(3)
         )
-        characterDao.insert(initialCharacters)
-        val initialSize = characterDao.getCharacters().size
+        characterRoomDao.insert(initialCharacters)
+        val initialSize = characterRoomDao.getCharacters().size
 
-        characterDao.deleteAll()
+        characterRoomDao.deleteAll()
 
         assertEquals(3, initialSize)
-        assertTrue(characterDao.getCharacters().isEmpty())
+        assertTrue(characterRoomDao.getCharacters().isEmpty())
     }
 
     private fun createCharacter(id: Long, name: String = "Raphael") = Character(
         id,
         name,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        CharacterLocation(
-            "",
-            ""
+        "Dead",
+        "Alien",
+        "Parasite, Cyborg",
+        "Male",
+        Origin(
+            "unknown",
+            null
         ),
-        CharacterOrigin(
-            "",
-            ""
+        Location(
+            "Earth (Replacement Dimension)",
+            20
         ),
-        emptyList(),
-        ""
+        "https://rickandmortyapi.com/api/character/avatar/16.jpeg",
+        listOf(
+            15
+        ),
+        "2017-11-04T21:12:45.235Z"
     )
 }

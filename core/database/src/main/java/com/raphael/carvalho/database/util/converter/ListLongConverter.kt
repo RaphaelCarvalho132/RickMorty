@@ -4,19 +4,19 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class ListStringConverter {
+class ListLongConverter {
 
     @TypeConverter
-    fun fromListString(value: List<String>): String {
+    fun fromListLong(value: List<Long>): String {
         val gson = Gson()
-        val type = object : TypeToken<List<String>>() {}.type
+        val type = object : TypeToken<List<Long>>() {}.type
         return gson.toJson(value, type)
     }
 
     @TypeConverter
-    fun toListString(value: String): List<String> {
+    fun toListLong(value: String): List<Long> {
         val gson = Gson()
-        val type = object : TypeToken<List<String>>() {}.type
+        val type = object : TypeToken<List<Long>>() {}.type
         return gson.fromJson(value, type)
     }
 }
