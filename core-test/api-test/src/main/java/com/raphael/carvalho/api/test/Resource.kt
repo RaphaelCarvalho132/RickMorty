@@ -6,7 +6,7 @@ object Resource {
      */
     fun read(fileLocation: String) = javaClass
         .classLoader!!
-        .getResourceAsStream(fileLocation)
+        .getResourceAsStream(fileLocation)!!
         .bufferedReader()
         .use { it.readText() }
 }

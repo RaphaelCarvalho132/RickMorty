@@ -14,4 +14,3 @@ data class Character(
     val url: String,
     val created: String
 )
-
