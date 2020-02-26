@@ -1,11 +1,11 @@
 package com.raphael.carvalho.api.character
 
 import com.raphael.carvalho.api.RetrofitBuilder
-import com.raphael.carvalho.api.character.model.Character
-import com.raphael.carvalho.api.character.model.Characters
-import com.raphael.carvalho.api.character.model.Location
-import com.raphael.carvalho.api.character.model.Origin
-import com.raphael.carvalho.api.character.model.PaginationInfo
+import com.raphael.carvalho.api.character.model.CharacterVo
+import com.raphael.carvalho.api.character.model.CharactersVo
+import com.raphael.carvalho.api.character.model.LocationVo
+import com.raphael.carvalho.api.character.model.OriginVo
+import com.raphael.carvalho.api.character.model.PaginationInfoVo
 import com.raphael.carvalho.api.new
 import com.raphael.carvalho.api.test.ApiRequestMockServer
 import com.raphael.carvalho.api.test.ApiRequestMockServer.addRequest
@@ -21,11 +21,11 @@ import org.junit.jupiter.api.extension.Extensions
 @Extensions(
     ExtendWith(ApiRequestMockServer::class)
 )
-class CharacterApiTest {
-    private val characterApi = RetrofitBuilder(
+class CharacterRetrofitApiTest {
+    private val characterRetrofitApi = RetrofitBuilder(
         baseUrl,
         httpClient
-    ).new<CharacterApi>()
+    ).new<CharacterRetrofitApi>()
 
     @Test
     fun `Given that there is no request error, When list character from page 1, Then should be returned page info and character 16 in the list`() {
@@ -35,13 +35,13 @@ class CharacterApiTest {
         )
 
         val characters = runBlocking {
-            characterApi.listCharacters(1)
+            characterRetrofitApi.listCharacters(1)
         }
 
         Assertions.assertEquals("/character/?page=1", server.takeRequest().path)
         Assertions.assertEquals(
-            Characters(
-                PaginationInfo(
+            CharactersVo(
+                PaginationInfoVo(
                     493,
                     25,
                     "https://rickandmortyapi.com/api/character/?page=2",
@@ -60,25 +60,25 @@ class CharacterApiTest {
         )
 
         val character = runBlocking {
-            characterApi.getCharacter(16)
+            characterRetrofitApi.getCharacter(16)
         }
 
         Assertions.assertEquals("/character/16", server.takeRequest().path)
         Assertions.assertEquals(createCharacter(), character)
     }
 
-    private fun createCharacter() = Character(
+    private fun createCharacter() = CharacterVo(
         16,
         "Amish Cyborg",
         "Dead",
         "Alien",
         "Parasite, Cyborg",
         "Male",
-        Origin(
+        OriginVo(
             "unknown",
             ""
         ),
-        Location(
+        LocationVo(
             "Earth (Replacement Dimension)",
             "https://rickandmortyapi.com/api/location/20"
         ),

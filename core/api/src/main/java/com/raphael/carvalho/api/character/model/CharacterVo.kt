@@ -1,14 +1,14 @@
 package com.raphael.carvalho.api.character.model
 
-data class Character(
+internal data class CharacterVo(
     val id: Long,
     val name: String,
     val status: String,
     val species: String,
     val type: String,
     val gender: String,
-    val origin: Origin,
-    val location: Location,
+    val origin: OriginVo,
+    val location: LocationVo,
     val image: String,
     val episode: List<String>,
     val url: String,

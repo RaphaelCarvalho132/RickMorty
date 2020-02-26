@@ -1,15 +1,12 @@
 package com.raphael.carvalho.api.character
 
-import com.raphael.carvalho.api.character.model.Character
-import com.raphael.carvalho.api.character.model.Characters
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.raphael.carvalho.character.Character
+import com.raphael.carvalho.character.Characters
 
 interface CharacterApi {
-    @GET("/character/")
-    suspend fun listCharacters(@Query("page") page: Long): Characters
+    val implementation: CharacterApi get() = CharacterApiImp()
 
-    @GET("/character/{id}")
-    suspend fun getCharacter(@Path("id") id: Long): Character
+    suspend fun listCharacters(page: Long): Characters
+
+    suspend fun getCharacter(id: Long): Character
 }
