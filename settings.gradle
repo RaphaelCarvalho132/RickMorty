@@ -1,6 +1,6 @@
 rootProject.name='RickMorty'
 include ':app'
-include ':core:database'
-include ':core:api'
+include ':database'
+include ':networking:api'
 include ':core-test:api-test'
 include ':model:character'
