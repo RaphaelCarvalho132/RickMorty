@@ -143,16 +143,16 @@ class CharacterDaoTest {
         "",
         "",
         "",
-        "",
-        "",
-        LocationPo(
-            null,
-            ""
-        ),
         OriginPo(
             1,
             ""
         ),
-        emptyList()
+        LocationPo(
+            null,
+            ""
+        ),
+        "",
+        emptyList(),
+        ""
     )
 }

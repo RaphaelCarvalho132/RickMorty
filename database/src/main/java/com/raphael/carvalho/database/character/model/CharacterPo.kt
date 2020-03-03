@@ -7,20 +7,20 @@ import androidx.room.PrimaryKey
 import com.raphael.carvalho.character.Character
 
 @Entity(tableName = CharacterPo.TABLE_NAME)
-internal data class CharacterPo(
+data class CharacterPo(
     @PrimaryKey
     @ColumnInfo(name = COLUMN_ID)
     override val id: Long,
     override val name: String,
-    override val image: String,
-    override val gender: String,
-    override val species: String,
     override val status: String,
+    override val species: String,
     override val type: String,
-    override val created: String,
-    @Embedded override val location: LocationPo,
+    override val gender: String,
     @Embedded override val origin: OriginPo,
-    override val episode: List<Long>
+    @Embedded override val location: LocationPo,
+    override val image: String,
+    override val episode: List<Long>,
+    override val created: String
 ) : Character {
     companion object {
         internal const val TABLE_NAME: String = "Character"
