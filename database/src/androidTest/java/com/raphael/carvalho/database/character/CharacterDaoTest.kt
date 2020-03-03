@@ -6,9 +6,9 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.raphael.carvalho.database.RickMortyDatabase
-import com.raphael.carvalho.database.character.model.CharacterLocationVo
-import com.raphael.carvalho.database.character.model.CharacterOriginVo
-import com.raphael.carvalho.database.character.model.CharacterVo
+import com.raphael.carvalho.database.character.model.CharacterPo
+import com.raphael.carvalho.database.character.model.LocationPo
+import com.raphael.carvalho.database.character.model.OriginPo
 import com.raphael.carvalho.livedata.test.getValueForTest
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -136,7 +136,7 @@ class CharacterDaoTest {
         assertTrue(characterDao.getCharacters().getValueForTest()!!.isEmpty())
     }
 
-    private fun createCharacter(id: Long, name: String = "Raphael") = CharacterVo(
+    private fun createCharacter(id: Long, name: String = "Raphael") = CharacterPo(
         id,
         name,
         "",
@@ -145,11 +145,11 @@ class CharacterDaoTest {
         "",
         "",
         "",
-        CharacterLocationVo(
+        LocationPo(
             null,
             ""
         ),
-        CharacterOriginVo(
+        OriginPo(
             1,
             ""
         ),

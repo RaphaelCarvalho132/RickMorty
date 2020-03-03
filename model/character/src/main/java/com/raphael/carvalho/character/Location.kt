@@ -1,6 +1,6 @@
 package com.raphael.carvalho.character
 
-data class Location(
-    val name: String,
+interface Location {
     val id: Long?
-)
+    val name: String
+}

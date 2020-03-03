@@ -1,6 +1,6 @@
 package com.raphael.carvalho.character
 
-data class Origin(
-    val name: String,
+interface Origin {
     val id: Long?
-)
+    val name: String
+}

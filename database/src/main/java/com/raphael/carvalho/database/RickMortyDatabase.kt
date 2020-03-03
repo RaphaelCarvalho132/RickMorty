@@ -6,11 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.raphael.carvalho.database.character.CharacterDao
-import com.raphael.carvalho.database.character.model.CharacterVo
+import com.raphael.carvalho.database.character.model.CharacterPo
 import com.raphael.carvalho.database.util.converter.ListLongConverter
 
 @Database(
-    entities = [CharacterVo::class],
+    entities = [CharacterPo::class],
     version = 1,
     exportSchema = false
 )
