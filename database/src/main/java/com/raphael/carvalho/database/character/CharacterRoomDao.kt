@@ -1,5 +1,6 @@
 package com.raphael.carvalho.database.character
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -14,10 +15,10 @@ internal interface CharacterRoomDao {
     suspend fun insert(characterVos: List<CharacterVo>)
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = :id")
-    suspend fun getCharacter(id: Long): CharacterVo?
+    fun getCharacter(id: Long): LiveData<CharacterVo?>
 
     @Query("SELECT * FROM $TABLE_NAME")
-    suspend fun getCharacters(): List<CharacterVo>
+    fun getCharacters(): LiveData<List<CharacterVo>>
 
     @Query("DELETE FROM $TABLE_NAME")
     suspend fun deleteAll()
