@@ -10,7 +10,7 @@ import com.raphael.carvalho.database.character.model.CharacterVo.Companion.COLUM
 import com.raphael.carvalho.database.character.model.CharacterVo.Companion.TABLE_NAME
 
 @Dao
-internal interface CharacterRoomDao {
+internal interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(characterVos: List<CharacterVo>)
 

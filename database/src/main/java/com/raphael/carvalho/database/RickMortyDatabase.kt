@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.raphael.carvalho.database.character.CharacterRoomDao
+import com.raphael.carvalho.database.character.CharacterDao
 import com.raphael.carvalho.database.character.model.CharacterVo
 import com.raphael.carvalho.database.util.converter.ListLongConverter
 
@@ -17,7 +17,7 @@ import com.raphael.carvalho.database.util.converter.ListLongConverter
 @TypeConverters(ListLongConverter::class)
 abstract class RickMortyDatabase : RoomDatabase() {
 
-    internal abstract fun characterRoomDao(): CharacterRoomDao
+    internal abstract fun characterDao(): CharacterDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the same time.
