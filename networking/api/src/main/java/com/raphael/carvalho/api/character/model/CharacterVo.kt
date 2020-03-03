@@ -1,6 +1,6 @@
 package com.raphael.carvalho.api.character.model
 
-internal data class CharacterVo(
+data class CharacterVo(
     val id: Long,
     val name: String,
     val status: String,

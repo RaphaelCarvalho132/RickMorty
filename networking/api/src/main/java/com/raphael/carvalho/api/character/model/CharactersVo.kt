@@ -2,7 +2,7 @@ package com.raphael.carvalho.api.character.model
 
 import com.google.gson.annotations.SerializedName
 
-internal data class CharactersVo(
+data class CharactersVo(
     @SerializedName("info")
     val info: PaginationInfoVo,
     @SerializedName("results")

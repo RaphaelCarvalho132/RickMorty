@@ -21,11 +21,11 @@ import org.junit.jupiter.api.extension.Extensions
 @Extensions(
     ExtendWith(ApiRequestMockServer::class)
 )
-class CharacterRetrofitApiTest {
+class CharacterApiTest {
     private val characterRetrofitApi = RetrofitBuilder(
         baseUrl,
         httpClient
-    ).new<CharacterRetrofitApi>()
+    ).new<CharacterApi>()
 
     @Test
     fun `Given that there is no request error, When list character from page 1, Then should be returned page info and character 16 in the list`() {
