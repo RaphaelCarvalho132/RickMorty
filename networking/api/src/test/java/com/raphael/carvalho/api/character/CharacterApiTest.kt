@@ -13,16 +13,13 @@ import com.raphael.carvalho.api.test.ApiRequestMockServer.baseUrl
 import com.raphael.carvalho.api.test.ApiRequestMockServer.httpClient
 import com.raphael.carvalho.api.test.ApiRequestMockServer.server
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.junit.jupiter.api.extension.Extensions
+import org.junit.AfterClass
+import org.junit.Assert.assertEquals
+import org.junit.BeforeClass
+import org.junit.Test
 
-@Extensions(
-    ExtendWith(ApiRequestMockServer::class)
-)
 class CharacterApiTest {
-    private val characterRetrofitApi = RetrofitBuilder(
+    private val characterApi: CharacterApi = RetrofitBuilder(
         baseUrl,
         httpClient
     ).new<CharacterApi>()
@@ -35,11 +32,11 @@ class CharacterApiTest {
         )
 
         val characters = runBlocking {
-            characterRetrofitApi.listCharacters(1)
+            characterApi.listCharacters(1)
         }
 
-        Assertions.assertEquals("/character/?page=1", server.takeRequest().path)
-        Assertions.assertEquals(
+        assertEquals("/character/?page=1", server.takeRequest().path)
+        assertEquals(
             CharactersVo(
                 PaginationInfoVo(
                     493,
@@ -60,11 +57,11 @@ class CharacterApiTest {
         )
 
         val character = runBlocking {
-            characterRetrofitApi.getCharacter(16)
+            characterApi.getCharacter(16)
         }
 
-        Assertions.assertEquals("/character/16", server.takeRequest().path)
-        Assertions.assertEquals(createCharacter(), character)
+        assertEquals("/character/16", server.takeRequest().path)
+        assertEquals(createCharacter(), character)
     }
 
     private fun createCharacter() = CharacterVo(
@@ -89,4 +86,20 @@ class CharacterApiTest {
         "https://rickandmortyapi.com/api/character/16",
         "2017-11-04T21:12:45.235Z"
     )
+
+    companion object {
+        private val apiRequestMockServer = ApiRequestMockServer
+
+        @BeforeClass
+        @JvmStatic
+        fun beforeClass() {
+            apiRequestMockServer.beforeClass()
+        }
+
+        @AfterClass
+        @JvmStatic
+        fun afterClass() {
+            apiRequestMockServer.afterClass()
+        }
+    }
 }

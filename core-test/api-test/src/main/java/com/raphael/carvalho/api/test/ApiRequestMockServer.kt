@@ -1,15 +1,13 @@
 package com.raphael.carvalho.api.test
 
 import com.raphael.carvalho.api.test.Resource.read
+import com.raphael.carvalho.core.test.shared.TestLifecycleConfiguration
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.jupiter.api.extension.AfterAllCallback
-import org.junit.jupiter.api.extension.BeforeAllCallback
-import org.junit.jupiter.api.extension.ExtensionContext
 
-object ApiRequestMockServer : BeforeAllCallback, AfterAllCallback {
+object ApiRequestMockServer : TestLifecycleConfiguration {
     lateinit var server: MockWebServer
 
     val baseUrl get() = server.url("/").toString()
@@ -17,11 +15,11 @@ object ApiRequestMockServer : BeforeAllCallback, AfterAllCallback {
         .addInterceptor(HttpLoggingInterceptor())
         .build()
 
-    override fun beforeAll(context: ExtensionContext?) {
+    override fun beforeClass() {
         server = MockWebServer()
     }
 
-    override fun afterAll(context: ExtensionContext?) {
+    override fun afterClass() {
         server.shutdown()
     }
 
