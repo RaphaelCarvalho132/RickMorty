@@ -138,23 +138,28 @@ class CharacterDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun givenDatabaseWith1Character_whenListAllCharacters_thenAllCharactersWillBeReturned() =
+    fun givenDatabaseWith2Character_whenListCharacterById_thenAllCharactersSortedById() =
         runBlocking {
             val charactersInDb = listOf(
+                createCharacter(2),
                 createCharacter(1)
             )
-            val startedListCharacters = characterDao.listAllExistingCharacters()
+            val charactersSorted = listOf(
+                createCharacter(1),
+                createCharacter(2)
+            )
+            val startedListCharacters = characterDao.listCharacterById()
 
             characterDao.insert(charactersInDb)
-            val endedListCharacters = characterDao.listAllExistingCharacters()
+            val endedListCharacters = characterDao.listCharacterById()
 
             characterDao.deleteAll()
 
             assertTrue(startedListCharacters.isEmpty())
-            assertEquals(charactersInDb, endedListCharacters)
+            assertEquals(charactersSorted, endedListCharacters)
         }
 
-    private fun createCharacter(id: Long, name: String = "Raphael") = CharacterPo(
+    private fun createCharacter(id: Int, name: String = "Raphael") = CharacterPo(
         id,
         name,
         "",

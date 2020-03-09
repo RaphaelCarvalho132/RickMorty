@@ -15,13 +15,13 @@ interface CharacterDao {
     suspend fun insert(characterPos: List<CharacterPo>)
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = :id")
-    fun getCharacter(id: Long): LiveData<CharacterPo?>
+    fun getCharacter(id: Int): LiveData<CharacterPo?>
 
     @Query("SELECT * FROM $TABLE_NAME")
     fun getCharacters(): LiveData<List<CharacterPo>>
 
-    @Query("SELECT * FROM $TABLE_NAME")
-    suspend fun listAllExistingCharacters(): List<CharacterPo>
+    @Query("SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_ID ASC")
+    suspend fun listCharacterById(): List<CharacterPo>
 
     @Query("DELETE FROM $TABLE_NAME")
     suspend fun deleteAll()

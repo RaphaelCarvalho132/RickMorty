@@ -1,7 +1,7 @@
 package com.raphael.carvalho.api.character.model
 
 data class CharacterVo(
-    val id: Long,
+    val id: Int,
     val name: String,
     val status: String,
     val species: String,

@@ -10,7 +10,7 @@ import com.raphael.carvalho.character.Character
 data class CharacterPo(
     @PrimaryKey
     @ColumnInfo(name = COLUMN_ID)
-    override val id: Long,
+    override val id: Int,
     override val name: String,
     override val status: String,
     override val species: String,
