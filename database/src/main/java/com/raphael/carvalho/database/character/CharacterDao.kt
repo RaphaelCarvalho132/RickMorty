@@ -20,6 +20,9 @@ interface CharacterDao {
     @Query("SELECT * FROM $TABLE_NAME")
     fun getCharacters(): LiveData<List<CharacterPo>>
 
+    @Query("SELECT * FROM $TABLE_NAME")
+    suspend fun listAllExistingCharacters(): List<CharacterPo>
+
     @Query("DELETE FROM $TABLE_NAME")
     suspend fun deleteAll()
 }

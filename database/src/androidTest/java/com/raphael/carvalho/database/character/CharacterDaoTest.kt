@@ -136,6 +136,24 @@ class CharacterDaoTest {
         assertTrue(characterDao.getCharacters().getValueForTest()!!.isEmpty())
     }
 
+    @Test
+    @Throws(Exception::class)
+    fun givenDatabaseWith1Character_whenListAllCharacters_thenAllCharactersWillBeReturned() =
+        runBlocking {
+            val charactersInDb = listOf(
+                createCharacter(1)
+            )
+            val startedListCharacters = characterDao.listAllExistingCharacters()
+
+            characterDao.insert(charactersInDb)
+            val endedListCharacters = characterDao.listAllExistingCharacters()
+
+            characterDao.deleteAll()
+
+            assertTrue(startedListCharacters.isEmpty())
+            assertEquals(charactersInDb, endedListCharacters)
+        }
+
     private fun createCharacter(id: Long, name: String = "Raphael") = CharacterPo(
         id,
         name,

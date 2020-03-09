@@ -17,7 +17,7 @@ import com.raphael.carvalho.database.util.converter.ListLongConverter
 @TypeConverters(ListLongConverter::class)
 abstract class RickMortyDatabase : RoomDatabase() {
 
-    internal abstract fun characterDao(): CharacterDao
+    abstract fun characterDao(): CharacterDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the same time.
